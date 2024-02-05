@@ -33,4 +33,8 @@ public class TweetService {
     public List<TweetModel> findAll(){
         return tweetRepository.findAll();
     }
+
+    public List<TweetModel> findTweetsByUserId(Long id){
+        return tweetRepository.findTweetsByUserId(id);
+    }
 }

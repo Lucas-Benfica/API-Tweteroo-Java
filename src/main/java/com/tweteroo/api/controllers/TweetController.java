@@ -18,6 +18,9 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -46,5 +49,10 @@ public class TweetController {
         return ResponseEntity.status(HttpStatus.OK).body(tweets);
     }
     
-    
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TweetModel>> getUserTweets(@PathVariable Long userId) {
+        List<TweetModel> userTweets = tweetService.findTweetsByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(userTweets);
+    }
+        
 }
