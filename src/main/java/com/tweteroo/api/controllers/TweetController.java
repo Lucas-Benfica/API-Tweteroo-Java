@@ -1,5 +1,6 @@
 package com.tweteroo.api.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @CrossOrigin(origins = "*")
@@ -32,9 +35,16 @@ public class TweetController {
     @PostMapping
     public ResponseEntity<TweetModel> createTweet(@RequestBody @Valid TweetDTO body){
         Optional<TweetModel> tweet = tweetService.save(body);
-        if(tweet.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if(!tweet.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(tweet.get());
     }
+
+    @GetMapping
+    public ResponseEntity<List<TweetModel>> getAlltweets() {
+        List<TweetModel> tweets = tweetService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(tweets);
+    }
+    
     
 }
